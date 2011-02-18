@@ -1,0 +1,1 @@
+<h1>Custom application based 404 page</h1>

@@ -174,7 +174,7 @@
 	// ! Default Controller   
 	// =========== 
 	
-	$config['routes']['default_controller'] = "home/login";
+	$config['routes']['default_controller'] = "home";
 	
 	// =========== 
 	// ! Turn on and off Templating   
