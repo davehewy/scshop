@@ -12,6 +12,8 @@
 	
 	define('FURY_VERSION',	'1.0.0');
 	
+	echo 'Im loading';
+	
 	// =========== 
 	// ! Your application details   
 	// =========== 
