@@ -1,4 +1,4 @@
-<center><h1 class="headline">Place order for Credits</h1></center>
+<center><h1 class="headline">Place order for Credits <?=$fuckaduck['name']?></h1></center>
 
 <?php
 

@@ -20,6 +20,8 @@
 		}		
 		
 		function start($action){
+		
+			$fuckaduck = $action;
 			
 			$this->load->library('input');
 			$this->load->library('validation');
@@ -71,8 +73,7 @@
 								if($p->discount>0){
 									$cost = round(($cost/100)*(100-$p->discount),2);
 								}
-								
-								
+									
 																																	
 								$this->payment_fields = array(
 								"email"=>$this->input->post('account'),
@@ -87,13 +88,14 @@
 								"playerid"=>$user_info['id']
 								);
 								
+								
 								$this->load->model('payswitch');
 				
 								# Redirect to the send payment model				
 				
 								$this->payswitch->initiate($this->payment_fields);
 								
-							}else{ $this->validation->addError("You cannot buy this many credits through sms, the limit for one transaction is 50. Please use another payment method to buy more at once.");}
+							}else{ $this->validation->addError("You cannot buy this many credits through SMS, the limit for one transaction is 50. Please use another payment method to buy more at once.");}
 															
 							}else{
 								$this->validation->addError("Amount was not valid");
@@ -117,6 +119,7 @@
 
 					
 					if($this->validation->isErrors()){
+					
 						
 						$this->load->helper('form_helper');
 						$this->load->helper('url_helper');
@@ -140,7 +143,7 @@
 						$page = array("header"=>$headerinfo,"product"=>$product_info,"cat"=>$ret_cat,"pricing"=>$pricing,"errors"=>$this->validation->displayErrors());
 									
 						$this->load->view('header',$page);
-						$this->load->view('credits');
+						$this->load->view('credits',$page);
 						$this->load->view('cards');
 						$this->load->view("otherways");
 						$this->load->view('footer');

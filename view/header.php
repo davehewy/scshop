@@ -2,8 +2,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"> 
 <head> 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
-<?php
-/*
 <title><?=$header['title']?></title>
 <link rel="stylesheet" type="text/css" media="all" href="<?=$header['asset']?>css/style.css">
 <link type="text/css" media="screen" href="<?=$header['asset']?>css/ui.css" rel="stylesheet" />
@@ -35,7 +33,8 @@
 			</div>
 		</div>
 		<div id="menu">
-	
+		<?php
+/*
 			<ul>
 				<li><a href="<?=base_url()?>">Home</a></li>
 				<li><?php echo anchor('shop/membership', 'Memberships'); ?></li>
@@ -47,9 +46,9 @@
 				<li><a href="#" id="loginbutton">Login</a></li>
 				<li class="no-border"><?php echo anchor('http://www.street-crime.com', 'The Game ->')?></li>
 			</ul>
-
+*/
+		?>
 		</div>
-	 */?>
 	<div id="content">
 		<div id="content-inner">
 	

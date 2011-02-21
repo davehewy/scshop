@@ -6,9 +6,12 @@
 			parent::__construct();
 		}
 		
-		function index(){
+		function _output($output){echo $output;}
 		
-/*
+		function index(){
+			
+			$fuckaduck = 'fuck you mincer';	
+			
 			$this->load->helper('form_helper');
 			$this->load->helper('url_helper');
 			$this->load->library('session');
@@ -28,20 +31,16 @@
 			// Work out the pricing
 			$pricing = array("single"=>$this->single_pricing($product_info));
 			
-			$page = array("header"=>$headerinfo,"product"=>$product_info,"cat"=>$ret_cat,"pricing"=>$pricing);
-*/
-			
-/*
-			$this->load->view('header');
+			$page = array("header"=>$headerinfo,"product"=>$product_info,"fuckaduck"=>array("name"=>$fuckaduck),"cat"=>$ret_cat,"pricing"=>$pricing);
+	
+			$this->load->view('header',$page);
 			$this->load->view('credits',$page);
 			$this->load->view('cards');
-			$this->load->view("otherways");
-*/			
-			echo 'horrible horrible script';
-			var_dump($this->load);
-			$this->load->view('footer');
-			
+			$this->load->view("otherways");	
+			$this->load->view('footer');		
+
 		}
+
 
 		function single_pricing($p){
 			if($p->discount>0){
