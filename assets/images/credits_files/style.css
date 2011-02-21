@@ -93,13 +93,9 @@ a:hover{
 
 #header{
 	position: relative;
-	height:98px;
-	background: black url(../images/header_repeat.png) no-repeat;
+	height:97px;
+	background: black url(../images/header_repeat.png);
 	background-repeat: repeat-x;	
-}
-
-#catchphrase{
-	padding: 0px 0px 0px 5px;
 }
 
 #character{
@@ -117,7 +113,7 @@ a:hover{
 #logo{
 	position: absolute;
 	top:5px;
-	left:85px;
+	left:65px;
 }
 
 #navs_topright{
@@ -202,16 +198,8 @@ a:hover{
 }
 
 #content{
-	padding:0px 0px 10px 0px;
+	padding:0px 10px 10px 10px;
 	font-size:93%;
-}
-
-#content-inner{
-	padding:0px 15px;
-}
-
-.indent{
-	padding-left:5px;
 }
 
 #navi{
@@ -219,9 +207,8 @@ a:hover{
 }
 
 .breaker{
-	margin: 10px -3px;
+	margin: 10px 0px 10px 0px;
 	padding:5px 10px;
-	width:980px;
 	background: #333;
 	border:1px solid black;
 	font-size:123.1%;
@@ -246,11 +233,13 @@ h2{
 	margin: 15px 0px;
 }
 
+
 h1.logo{
-	font-size: 16px;
-	text-shadow: #333 2px 2px 1px;
-	color: #999;
-	margin: 0px;
+	font: 400% 'PincoyablackBlack', Arial, sans-serif;
+	letter-spacing: 2;
+	color:#000;
+	margin: 15px 0px;
+	
 }
 
 h1.headline{

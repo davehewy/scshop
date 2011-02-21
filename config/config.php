@@ -23,13 +23,13 @@
 	// ! example http://website.com/ 	   
 	// =========== 
 	
-	$config['base_url'] = "http://localhost:8888/Fury-PHP/";
+	$config['base_url'] = "http://localhost:8888/scshop/";
 	
 	// =========== 
 	// ! Assets folder location   
 	// =========== 
 	
-	$config['assets_url'] = "assets/";
+	$config['assets_url'] = "/scshop/assets/";
 	
 	// =========== 
 	// ! Index page
@@ -65,7 +65,7 @@
 		
 		"user" => "root",
 		"password" => "root",
-		"database" => "scshop",
+		"database" => "streetcrime",
 		"host" => "localhost",
 		"char_set" => "utf8",
 		"dbcollat" => "utf8_general_ci"

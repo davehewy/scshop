@@ -36,7 +36,7 @@ $(function(){
 		}
 		
 		$("#credits").html(credits);
-		$("#cost").html('&pound;'+cost);
+		$("#cost").html('$'+cost);
 		var cost_per = Math.round((cost/credits)*1000)/1000;
 		cost_per = cost_per.toFixed(3);
 		$("#costper").html(cost_per);

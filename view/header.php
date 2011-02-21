@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"> 
 <head> 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
-<title><?php if($title){ echo $title.' | '; }?> Street Crime - Shop</title>
+<title><?=$header['title']?></title>
 <link rel="stylesheet" type="text/css" media="all" href="<?=$header['asset']?>css/style.css">
 <link type="text/css" media="screen" href="<?=$header['asset']?>css/ui.css" rel="stylesheet" />
 <link type="text/css" media="screen" href="<?=$header['asset']?>css/simplemodal.css" rel="stylesheet" />
@@ -22,9 +22,11 @@
 				<img src="<?=$header['asset']?>images/streetcrime_characters.png" />
 			</div>
 			<div id="logo">
-				<a href="#">
-					<!-- <h1 class="logo"><span class="pink">Street Crime - Shop</span></h1> -->
+				<a href="<?=$header['base_url']?>">
 					<img src="<?=$header['asset']?>images/logo.jpg" />
+					<div id="catchphrase">	
+						<h1 class="logo">Street Crime - Shop</h1>
+					</div>
 				</a>
 			</div>
 			<div id="slogan">
