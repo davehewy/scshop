@@ -28,7 +28,6 @@
 			$pricing = array("single"=>$this->single_pricing($product_info));
 			
 			$page = array("header"=>$headerinfo,"product"=>$product_info,"cat"=>$ret_cat,"pricing"=>$pricing);
-						
 			
 			$this->load->view('header');
 			$this->load->view('credits',$page);
