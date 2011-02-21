@@ -29,8 +29,8 @@
 			
 			$page = array("header"=>$headerinfo,"product"=>$product_info,"cat"=>$ret_cat,"pricing"=>$pricing);
 						
-			$this->load->view('header');
-			$this->load->view('credits');
+			$this->load->view('header',$page);
+			$this->load->view('credits',$page);
 			$this->load->view('cards');
 			$this->load->view("otherways");
 			$this->load->view('footer');
