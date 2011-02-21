@@ -61,6 +61,8 @@
 	// ! Default database   
 	// =========== 
 	
+	if(DEVELOPMENT_ENVIRONMENT){
+	
 	$config['database']['default'] = array(
 		
 		"user" => "root",
@@ -71,6 +73,21 @@
 		"dbcollat" => "utf8_general_ci"
 		
 	);
+	
+	}else{
+
+		$config['database']['default'] = array(			
+			
+			"user" => "bytewire-iqb8",
+			"password" => "DsvQcThjVBcBYdwD",
+			"database" => "bytewire-streetcrime",
+			"host" => "xsql1.dc.fubra.net",
+			"char_set" => "utf8",
+			"dbcollat" => "utf8_general_ci"
+			
+		);
+	
+	}
 	
 	// =========== 
 	// ! Alternative databases can be listed here   
