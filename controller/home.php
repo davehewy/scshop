@@ -37,6 +37,7 @@
 			$this->load->view('cards');
 			$this->load->view("otherways");
 */			
+			echo 'horrible horrible script';
 			var_dump($this->load);
 			$this->load->view('footer');
 			
