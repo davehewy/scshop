@@ -63,16 +63,16 @@
 	
 	if(DEVELOPMENT_ENVIRONMENT){
 	
-	$config['database']['default'] = array(
-		
-		"user" => "root",
-		"password" => "root",
-		"database" => "streetcrime",
-		"host" => "localhost",
-		"char_set" => "utf8",
-		"dbcollat" => "utf8_general_ci"
-		
-	);
+		$config['database']['default'] = array(
+			
+			"user" => "root",
+			"password" => "root",
+			"database" => "streetcrime",
+			"host" => "localhost",
+			"char_set" => "utf8",
+			"dbcollat" => "utf8_general_ci"
+			
+		);
 	
 	}else{
 
@@ -88,6 +88,8 @@
 		);
 	
 	}
+	
+	print_r($config['database']['default']);
 	
 	// =========== 
 	// ! Alternative databases can be listed here   
