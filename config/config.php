@@ -2,7 +2,9 @@
 
 	if ( ! defined('ROOT')) exit('No direct script access allowed');
 
-	# Some file to basically setup all of the basic variables.
+	# Some file to basically setup all of the basic variables
+	# This file is specifically setup to handle both local and remote environments
+	#ÊWhich is specifically useful, on projects with multiple devs and switching
 	
 	// =========== 
 	// ! Version   
@@ -18,18 +20,28 @@
 	$config['application']['name'] = 'Street Crime';
 	
 	// =========== 
+	// ! Basic routing   
+	// =========== 
+	
+	define( 'APP_PATH' , ROOT .'application' .DS  );
+	
+	define( 'ASSETS_PATH' , ROOT .'application/assets' .DS );
+	
+	
+	// =========== 
 	// ! Base site URL
 	// ! Typically this would be your base URL with a trailing slash
 	// ! example http://website.com/ 	   
 	// =========== 
 	
-	$config['base_url'] = "http://localhost:8888/scshop/";
+	$config['base_url'] = (DEVELOPMENT_ENVIRONMENT === TRUE) ? "http://localhost:8888/scshop/" : "/";
+	
 	
 	// =========== 
 	// ! Assets folder location   
 	// =========== 
 	
-	$config['assets_url'] = "/scshop/assets/";
+	$config['assets_url'] = (DEVELOPMENT_ENVIRONMENT === TRUE) ? "/scshop/assets/" : "/assets";
 	
 	// =========== 
 	// ! Index page
@@ -89,7 +101,6 @@
 	
 	}
 	
-	print_r($config['database']['default']);
 	
 	// =========== 
 	// ! Alternative databases can be listed here   
@@ -142,14 +153,6 @@
 	$config['webmaster_sendfrom'] = 'Street Crime Mmorpg Game';
 	$config['reply_to_email'] = 'feedback@street-crime.com';
 	$config['reply_to_name'] = 'Street Crime Feedback';
-	
-	// =========== 
-	// ! Basic routing   
-	// =========== 
-	
-	define( 'APP_PATH' , ROOT .'application' .DS  );
-	
-	define( 'ASSETS_PATH' , ROOT .'assets' .DS );
 	
 	// =========== 
 	// ! Uri protocol, determines how the application reads in
