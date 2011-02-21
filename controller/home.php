@@ -36,7 +36,8 @@
 			$this->load->view('credits',$page);
 			$this->load->view('cards');
 			$this->load->view("otherways");
-*/
+*/			
+			var_dump($this->load);
 			$this->load->view('footer');
 			
 		}
