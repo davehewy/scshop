@@ -1,4 +1,4 @@
-<center><h1 class="headline">Place order for Credits <?=$fuckaduck['name']?></h1></center>
+<center><h1 class="headline">Place order for Credits</h1></center>
 
 <?php
 
@@ -11,7 +11,7 @@
 		if($i==1){
 			$costs[$i] = number_format(($pricing['single']*($i*10)),2);
 		}elseif($i==21){
-			$costs[$i] = number_format((75.00/100)*(100-$product->discount),2);
+			$costs[$i] = number_format((47.50/100)*(100-$product->discount),2);
 		}else{
 			$costs[$i] = number_format(((($pricing['single']*($i*10))/100)*(100-$i)),2);
 		}

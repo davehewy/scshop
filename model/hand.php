@@ -4,18 +4,38 @@
 	// to the correct playerid and email passed to it via the call.
 
 	class Hand extends Model{
-		
+	
+	var $account = array();
+	var $action;
+	var $product = array();
+	var $via;
+	
 	private $player_email;
 	private $item_number;
+	private $item_name;
+	private $txn_id;
+	private $amt_paid;
+	private $quantity;
 	
 		function __construct(){
 			parent::Model();
 		}
 		
-		function in_it($player_email,$item,$txn_id){
+		function in_it($via,$player_email,$item_number,$item_name,$txn_id,$amt_paid,$quantity=false){
+			$this->via = $via;
 			$this->player_email  = $player_email;
-			$this->item_number = $item;
+			$this->item_number = $item_number;
+			$this->item_name = $item_name;
 			$this->txn_id = $txn_id;
+			$this->amt_paid = $amt_paid;
+			$this->quantity = $quantity;
+		}
+		
+		function update_player($email,$sql){
+			$row_id = $this->db->query("select id from user_info where email='{$email}' order by id desc limit 1")->row();
+			if($row_id):
+			$this->db->query("update user_info set $sql where id='{$row_id['id']}'");
+			endif;
 		}
 		
 		
@@ -53,15 +73,72 @@
 			
 		}
 		
-		function fetchPlayer($email){
+		function fetchPlayer(){
 			// Fetch the newest account by the paying email.
-			$account = $this->realdb->query("select id,username,email from user_info where email='{$email}' order by id desc limit 1")->row();
-			return $account->id;
+			$this->account = $this->db->query("select id,username,email,status from user_info where email='{$this->player_email}' order by id desc limit 1")->row();
 		}
 		
+		function fetchAction($item_number){
+			$action = $this->db->query("select name from products where itemnum='{$item_number}'")->row();
+			$the_action = preg_split('/ /', $action['name']); 
+			$this->action = $the_action[0];
+			$this->product = $action;
+			return $the_action[0];
+		}
 		
-		function msgPlayer(){
+		// =========== 
+		// ! Function which actually handles the handing of the goods to the players.   
+		// =========== 
 		
+		function handGoods($action){
+			$the_var = 'add'.$action;
+			$this->$the_var();
+			$this->fetchPlayer();
+			
+			// Only send a message to the player if there is a record of the player is alive.
+			
+			if($this->account['status']=='Alive'){
+				
+				$msg = sprintf(gettext("Your payment of &pound;%s via %s for %s has been successfully processed! The %s have been automatically added to your account. 
+				
+				If you haven't already, check out the [url=/world/creditshop.php]credit store[/url] credit store to see what items you can purchase with them."),number_format($this->amt_paid,2),$this->via,$this->item_name,$this->product['name']);
+			
+				$this->msgplayer($this->account['id'], $msg);
+			}
+			
+			// Always send the account holder an email transaction to confirm it.
+			
+			$send_to_name = (is_empty($this->account['username'])) ? 'Player' : $this->account['username'];
+			
+			$this->load->library('mail');
+	        $this->mail
+	            ->setTo($this->player_email,$send_to_name);
+	            ->setSubject($this->core->get_config_item('name','application')." - Forgotten Password")
+	            ->setPlain()
+	            ->setHtml()
+	            ->send();
+			
+		}
+		
+		function msgPlayer($id,$msg){
+		
+			$mail = array(
+				"sender"=>0,
+				"receiver"=>$id,
+				"message" => $msg,
+				"Date" => time()
+			);
+			
+			$data = $this->db->query("select id from msgchanges from playerid='$id'")->row();
+			
+			if($data){
+				$this->db->query("update msgchanges set msgcount=msgcount+'1' where playerid='$id'");
+			}else{
+				$this->db->insert("msgchanges",array("playerid"=>$id,"msgcount"=>"1"));
+			}
+ 			
+			
+			$this->db->insert("mail_in",$mail);
 		
 		}
 		
@@ -95,9 +172,9 @@
 		
 		// # Credits
 		
-		function addCredits($amt){
+		function addCredits(){
 			
-			
+			$this->update_player($this->player_email,"credits=credits+'$this->quantity'");
 			
 		}
 		

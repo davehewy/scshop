@@ -1,6 +1,5 @@
-
-<h1>Complete your payment Via SMS</h1>
-<p>You are making a payment for </p>
+<h1>Complete your payment Via SMS / Phone</h1>
+<p>You are making a payment for <b><?=$prodinfo['name']?></b>, these will be added automatically to your account as soon as your payment is successfully received.</p>
 
 <div style="padding:10px 0px 0px 0px;"><center><iframe height="530" width="450" style="border:3px solid black;" marginheight="0" marginwidth="0" frameborder="0" src="http://daopay.com/pay/?<?=$qString?>"> 
 	</iframe></center></div>

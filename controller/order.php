@@ -55,47 +55,43 @@
 							}
 							
 							if(isset($continue)==1){
+							
+							$single_pricing = $this->single_pricing($p);
 													
 								switch($amount){
 									default:
-											$cost = (((($p->price*10)*$amount)/100)*(100-$amount));
+											$cost = number_format((($single_pricing*($amount*10))/100)*(100-$amount),2,'.','');
 											break;
 									case 1:	
-											$cost = ($p->price*10);
+											$cost = ($single_pricing*10);
 											break;
 									case 21:
-											$cost = 75;
+											$cost = 47.50;
 											break;
-								}
-								
-								
-								// Factor in the discount
-								if($p->discount>0){
-									$cost = round(($cost/100)*(100-$p->discount),2);
 								}
 									
 																																	
 								$this->payment_fields = array(
-								"email"=>$this->input->post('account'),
-								"type"=>$this->input->post('type'),
-								"on1"=>($amount*10),
-								"on1_name"=> "amount",				
-								"product"=>$p->itemnum,
-								"amount"=>$amount,
-								"cost"=>$cost,
-								"prodname"=>$p->name,
-								"cat"=>$p->category,
-								"playerid"=>$user_info['id']
+									"email"=>$this->input->post('account'),
+									"type"=>$this->input->post('type'),
+									"on1"=>($amount*10),
+									"on1_name"=> "amount",				
+									"product"=>$p->itemnum,
+									"amount"=>$amount,
+									"cost"=>$cost,
+									"prodname"=>$p->name,
+									"cat"=>$p->category,
+									"playerid"=>$user_info['id']
 								);
 								
-								
+										
 								$this->load->model('payswitch');
 				
 								# Redirect to the send payment model				
 				
 								$this->payswitch->initiate($this->payment_fields);
 								
-							}else{ $this->validation->addError("You cannot buy this many credits through SMS, the limit for one transaction is 50. Please use another payment method to buy more at once.");}
+							}else{ $this->validation->addError("You cannot buy this many credits through SMS, the limit for one transaction is 20. Please use another payment method to buy more at once.");}
 															
 							}else{
 								$this->validation->addError("Amount was not valid");

@@ -3,11 +3,11 @@
 	Class Payswitch extends Model{
 	
 	const SMS_APPCODE = 58933;
-	const SMS_CURRENCY = 'USD';
+	const SMS_CURRENCY = 'GBP';
 	
 	var $payvars = array();
 	var $pay_email = "payments@bytewire.co.uk";
-	var $moneybookers = array("payment_methods"=>"VSA","pay_to_email"=>"dave@bytewire.co.uk","recipient_description"=>"STREET-CRIME.COM","transaction_id"=>"hygygyg919191","return_url"=>"http://street-crime.com","return_url_text"=>"Go back to Street Crime","return_url_target"=>"_parent","cancel_url"=>"http://street-crime.com","cancel_url_target"=>"_parent","status_url"=>"http://street-crime.com/success","confirmation_note"=>"Your good will be credited to your account as soon as the order is processed (this is usually instant) however please allow up to an hour before contacting an admin about not receiving an item.","currency"=>"USD","detail1_description"=>"Game:","detail1_text"=>"Street Crime");
+	var $moneybookers = array("payment_methods"=>"VSA","pay_to_email"=>"dave@bytewire.co.uk","recipient_description"=>"STREET-CRIME.COM","transaction_id"=>"hygygyg919191","return_url"=>"http://street-crime.com","return_url_text"=>"Go back to Street Crime","return_url_target"=>"_parent","cancel_url"=>"http://street-crime.com","cancel_url_target"=>"_parent","status_url"=>"http://street-crime.com/success","confirmation_note"=>"Your good will be credited to your account as soon as the order is processed (this is usually instant) however please allow up to an hour before contacting an admin about not receiving an item.","currency"=>"GBP","detail1_description"=>"Game:","detail1_text"=>"Street Crime");
 	var $address_default = array("address"=>"Online","address2"=>"Online","phone_number"=>"021343","postal_code"=>"NOCODE","city"=>"Online","state"=>"Online");
 	
 	
@@ -193,17 +193,19 @@
 					"cmd" => "_xclick",
 					"business" => "seller_1282048892_biz@bytewire.co.uk",
 					"quantity" => "1",
-					"currency_code" => htmlspecialchars("USD"),
+					"currency_code" => htmlspecialchars("GBP"),
 					"no_shipping" => "0",
 					"no_note" => "1",
 					"bn" => "PP-BuyNowBF",
-					"return" =>  urlencode("http://shop.street-crime.com"),
-					"notify_url" => urlencode("https://shop.street-crime.com/callback/paypal"),
+					"return" =>  urlencode("http://shop.street-crime.com/pay/complete/paypal/"),
+					"notify_url" => urlencode("http://shop.street-crime.com/callback/paypal/"),
 					"item_name" => $item_name,
 					"item_number" => $this->payvars['product'],
 					"amount" => number_format($this->payvars['cost'],2),
 					"on0" => $this->payvars['email'],
 					"option_name0" => "player_email",
+					"on1" => $this->payvars['amount'],
+					"option_name1" => "amount"
 				);
 				
 				# Check for further optional extras.
@@ -300,12 +302,21 @@
 		}
 		
 		function sms(){
+		
+			if($this->payvars['product'] == "0005"){
+				switch($this->payvars['amount']){
+					case 1: $this->payvars['cost'] = 3;break;
+					case 2: $this->payvars['cost'] = 4.5; break;
+				}
+			}
+			
+			$the_amount = $this->payvars['amount'] * 10;			
 									
 			$array = array( "query_string" => array(
 				"appcode" => self::SMS_APPCODE,
 				"currency" =>  self::SMS_CURRENCY,
 				"price" => $this->payvars['cost'],
-				"product" => $this->payvars['product'],
+				"product" => $this->payvars['amount'].' '.$this->payvars['prodname'],
 				"prodcode" => $this->payvars['product'],
 				"gamepaytype" => "sms",
 				"style" => 1
@@ -325,6 +336,7 @@
 			endforeach;
 			
 			$data['qString'] = $qString;
+			$data['prodinfo'] = array("name"=>$the_amount.' '.$this->payvars['prodname']);
 			
 			$this->shopcore = $this->model_load_model('shopcore');
 			$headerinfo = $this->shopcore->headerinfo('Street Crime Shop - Pay Via SMS');
@@ -346,7 +358,7 @@
 			
 			$this->load->view('header',$page);		
 		
-			$this->load->view('bankTransfer');
+			$this->load->view('banktransfer');
 			
 			$this->load->view('footer');
 		

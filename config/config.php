@@ -137,7 +137,7 @@
 	// =========== 
 	
 	$config['zend_local_include'] = "/usr/lib/php/libraries/zend-framework-1.11.2/";
-	$config['remote_include'] = "/";
+	$config['remote_include'] = $_SERVER['DOCUMENT_ROOT'];
 	
 	// =========== 
 	// ! Configure API Keys. Require by the likes of Postmark or what not.
@@ -174,7 +174,7 @@
 	// ! Allowed URI Characters   
 	// =========== 
 	
-	$config['permitted_uri_chars'] = 'a-z 0-9~%.:_\@-';	
+	$config['permitted_uri_chars'] = 'a-z 0-9~%.:_\?\=\&\@-';	
 	
 	// =========== 
 	// ! Add a suffix to all the FURY generated urls  
