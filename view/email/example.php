@@ -4,24 +4,24 @@
 </head>
 <body>
 <div>
-<img src="http://shop.street-crime.com/assets/images/logo.jpg">
+<img src="http://shop.street-crime.com/assets/images/logo_white.jpg" height="80">
 </div>
 <div class="padtop10">
 Your payment to Street Crime for <strong>&pound;13.00</strong> via <strong>Paypal</strong> for 30 Credits has been successfully received and allocated to Street Crime account: <strong>Synthasize</strong>.
 
 <p><em>*Note: If this account is dead, your credits will be automatically moved to your new account when you create it.</em></p>
 </div>
-<div class="padtop10">
+<div>
 <h2>Purchase Invoice</h2>
 <table width="300px">
 <tr><td>Account: </td><td>dave@bytewire.co.uk</td></tr>
 <tr><td>Current username:</td><td>Synthasize | Status: Alive</td></tr>
 </table>
-<h3>Items</h3>
-<table width="400px">
+<h2>Items</h2>
+<table width="400px" class="invoice">
 	<tr><th>Item</th><th>Cost</th></tr>
 	<tr><td>30 Credits</td><td>&pound;7.99</td></tr>
-	<tr><td colspan="2">
+	<tr><td colspan="2" class="nobottom">
 		<div class="fr">
 			<strong>Total: &pound;7.99</strong>
 		</div>

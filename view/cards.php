@@ -1,5 +1,8 @@
 <div class="breaker">Select Payment Method</div>
 <div class="pad10">
+*Note if you are buying credits to apply to an account which has died, then you will need to select a payment method that is instant, which is every option other than Bank Transfer.
+</div>
+<div class="pad10">
 <table border="0" class="cards" style="margin:10px auto;">
 	<tr>
 		<td><label for="radio1"><img style="cursor:pointer;" src="<?=$header['asset']?>images/paypal.png"></label></td>
@@ -21,9 +24,9 @@
 	</tr>
 	<tr>
 		<td><label for="radio5"><img style="cursor:pointer;" src="<?=$header['asset']?>images/maestro.png"></label></td>
-		<td><label for="radio6"><img style="cursor:pointer;" src="<?=$header['asset']?>images/moneybookers.png"></label></td>
-		<td><label for="radio7"><img style="cursor:pointer;" src="<?=$header['asset']?>images/banktransfer.png"></label></td>
-		<td><label for="radio8"><img style="cursor:pointer;" src="<?=$header['asset']?>images/mobilepay.png"></label></td>
+		<td><label for="radio6"><img style="cursor:pointer;" src="<?=$header['asset']?>images/moneybookers.png" class="withtip" title="Currently unavailable"></label></td>
+		<td><label for="radio7"><img style="cursor:pointer;" src="<?=$header['asset']?>images/banktransfer.png" class="withtip" title="Currently unavailable"></label></td>
+		<td><label for="radio8"><img style="cursor:pointer;" src="<?=$header['asset']?>images/mobilepay.png" class="withtip" title="Currently unavailable"></label></td>
 	</tr>
 	<tr>
 		<td align="center"><label for="radio5">Maestro</label></td>
@@ -33,14 +36,17 @@
 	</tr>
 	<tr>
 		<td align="center"><input type="radio" id="radio5" value="5" name="type" <?php echo set_radio('type', '5'); ?>></td>
-		<td align="center"><input type="radio" id="radio6" value="6" name="type" <?php echo set_radio('type', '6'); ?>></td>
-		<td align="center"><input type="radio" id="radio7" value="7" name="type" <?php echo set_radio('type', '7'); ?>></td>
-		<td align="center"><input type="radio" id="radio8" value="8" name="type" <?php echo set_radio('type', '8'); ?>></td>
+		<td align="center"><input type="radio" id="radio6" value="6" name="type" disabled="disabled" class="withtip" title="currently unavailable" <?php echo set_radio('type', '6'); ?>></td>
+		<td align="center"><input type="radio" id="radio7" value="7" name="type" disabled="disabled" <?php echo set_radio('type', '7'); ?>></td>
+		<td align="center"><input type="radio" id="radio8" value="8" name="type" disabled="disabled" <?php echo set_radio('type', '8'); ?>></td>
 	</tr>
 	<tr>
 		<td colspan="4" align="center" style="padding-top:8px;"><input type="submit" value="" name="pay" class="bigblack" id="paybutton" /></td>
 	</tr>
 </table>
+
+<p>*Note: Currently we have disabled payments via Moneybookers, SMS and Bank Transfers. They will become available soon.</p>
+
 </div>
 
 </form>

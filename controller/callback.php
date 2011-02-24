@@ -26,7 +26,20 @@
 		}
 		
 		function paypoint(){
+		
 			$this->load->model('paypoint/process');
+			$ret = $this->process->handle();
+			
+			$this->load->model('shopcore');
+			$headerinfo = $this->shopcore->headerinfo('Street Crime Shop - Credits');		
+			
+			$page = array("header"=>$headerinfo,"ret_info"=>$ret);
+			
+			$this->load->view('header_alt',$page);
+			$this->load->view('pay/paypoint',$page);
+			$this->load->view('footer');
+
 		}
+	
 	
 	}

@@ -7,7 +7,7 @@
 	
 	var $payvars = array();
 	var $pay_email = "payments@bytewire.co.uk";
-	var $moneybookers = array("payment_methods"=>"VSA","pay_to_email"=>"dave@bytewire.co.uk","recipient_description"=>"STREET-CRIME.COM","transaction_id"=>"hygygyg919191","return_url"=>"http://street-crime.com","return_url_text"=>"Go back to Street Crime","return_url_target"=>"_parent","cancel_url"=>"http://street-crime.com","cancel_url_target"=>"_parent","status_url"=>"http://street-crime.com/success","confirmation_note"=>"Your good will be credited to your account as soon as the order is processed (this is usually instant) however please allow up to an hour before contacting an admin about not receiving an item.","currency"=>"GBP","detail1_description"=>"Game:","detail1_text"=>"Street Crime");
+	var $moneybookers = array("payment_methods"=>"VSA","pay_to_email"=>"dave@bytewire.co.uk","recipient_description"=>"STREET-CRIME.COM","transaction_id"=>"hygygyg919191","return_url"=>"http://street-crime.com","return_url_text"=>"Go back to Street Crime","return_url_target"=>"_parent","cancel_url"=>"http://shop.street-crime.com","cancel_url_target"=>"_parent","status_url"=>"http://shop.street-crime.com/callback/moneybookers/","confirmation_note"=>"Your good will be credited to your account as soon as the order is processed (this is usually instant) however please allow up to an hour before contacting an admin about not receiving an item.","currency"=>"GBP","detail1_description"=>"Game:","detail1_text"=>"Street Crime");
 	var $address_default = array("address"=>"Online","address2"=>"Online","phone_number"=>"021343","postal_code"=>"NOCODE","city"=>"Online","state"=>"Online");
 	
 	
@@ -39,7 +39,7 @@
     		return str_replace($entities, $replacements, urlencode($string));
 		}
 		
-		function createUniqueId($playerid){
+		function createUniqueId(){
 			//there doesnt appear to be a row.
 			//hash up a unique id num
 			$uniqueId = str_replace(
@@ -49,13 +49,13 @@
 			
 			//so we now have there unique id number
 			
-			$uniqueId = 'scprem-'.$uniqueId;
+			$uniqueId = 'sccred-'.$uniqueId;
 			
 			//make a row in the db
 			
-			$table['transid']=$uniqueId;
-			$table['playerid']=$this->payvars['playerid'];
-			$this->db->insert("secpaytrans",$table);	
+			$table['trans_id']=$uniqueId;
+			$table['player']=$this->payvars['email'];
+			$this->db->insert("ipn_paypoint_temp",$table);	
 			
 			return $uniqueId;
 		}
@@ -169,7 +169,7 @@
 					"cmd" => "_xclick-subscriptions",
 					"business" => "payments@bytewire.co.uk",
 					"item_name" => $item_name,
-					"return" =>  urlencode("http://shop.street-crime.com/complete"),
+					"return" =>  urlencode("http://shop.street-crime.com/complete/"),
 					"cancel_return" =>  urlencode("http://shop.street-crime.com/"),
 					"quantity" => "1",
 					"a3" => number_format($this->payvars['cost'],2),
@@ -259,9 +259,9 @@
 			
 			// Does this user have a payment waiting to go somewhere?
 
-			$q = $this->db->query("select transid from secpaytrans where playerid='{$this->payvars['playerid']}' and used='0'")->row();
+			$q = $this->db->query("select trans_id from ipn_paypoint_temp where player='{$this->payvars['email']}'")->row();
 			if($q){
-				$transid = $q['transid'];
+				$transid = $q['trans_id'];
 			}else{
 				$transid = $this->createUniqueId();
 			}
@@ -279,10 +279,11 @@
 				"trans_id"=>$transid,
 				"amount"=>round($this->payvars['cost'],2),
 				"callback"=>$this->ppoint_callback,
-				"digest"=>$digest,"backcallback"=>$this->ppoint_backcallback,
+				"digest"=>$digest,
+				"backcallback"=>$this->ppoint_backcallback,
 				"show_back"=>"back",
-				"order"=>$this->payvars['product'],
-				"options"=>"cb_post=true,md_flds=trans_id:amount:callback,merchant_logo=<img src=http://www.street-crime.com/images/payinglogo.jpg class=floatleft alt=Street Crime height=72>"
+				"order"=>"item_num=".$this->payvars['product'].',item_name='.$this->payvars['prodname'].',quantity='.$this->payvars['amount'].',email='.$this->payvars['email'],
+				"options"=>"cb_post=true,cb_card_type=true,md_flds=trans_id:amount:callback,merchant_logo=<img src=http://www.street-crime.com/images/payinglogo.jpg class=floatleft alt=Street Crime height=72>"
 			);
 			
 			$query_string = '';

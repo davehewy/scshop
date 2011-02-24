@@ -20,7 +20,7 @@
 ?>
 
 <div class="indent">
-<h1><? echo $product->name; ?> - starting at 10 for $<?=number_format($ten,2);?> <?php if($product->discount>0){ echo ' - <span class="sale">SALE '.$product->discount.'% OFF!</span>';}?></h1>
+<h1><? echo $product->name; ?> - starting at 10 for &pound;<?=number_format($ten,2);?> <?php if($product->discount>0){ echo ' - <span class="sale">SALE '.$product->discount.'% OFF!</span>';}?></h1>
 <?php echo $cat->description; ?>
 
 <?php 
@@ -31,9 +31,9 @@
 </div>
 <?php echo form_open_this('order/start/'.strtolower(str_replace(" ","_",$product->name)));?>
 
-<div class="breaker">Account</div>
+<div class="breaker">I want these credits to be applied to the account attached to the below:</div>
 <div class="indent">
-I want these credits to be applied to the account attached to this email address: &nbsp;
+<span class="bigtext">Email Address:</span> &nbsp;
 
 <?php
   	$data = array("name"=>"account","value"=>set_value('account'),"class"=>"text","style"=>"width:200px;");
@@ -46,15 +46,14 @@ I want these credits to be applied to the account attached to this email address
 	if($this->session->_get('email')){
 		echo '&nbsp;&nbsp;<a href="#" id="changeuser">change</a>';
 	}
-?>
-
+?> &nbsp;(enter the email address of your Street Crime character)
 </div>
 <div class="breaker">Select Quantity</div>
 
 	
 <div class="ovfl threequarters centrediv">
 	<div class="halfthreequarters fl">
-		<span class="big">Order: <span id="credits">10</span> Credits</span>
+		<span class="big bigtext">Order: <span id="credits">10</span> Credits</span>
 		<p>Alter amount:&nbsp;
 		<select name="selectamount" class="scshop">
 		<?php 

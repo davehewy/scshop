@@ -193,14 +193,18 @@ fclose ($fp);
 							
 								// Record the IPN in our database.
 								
+								$gross = ($payment_gross <=0 ) ? $mc_gross : $payment_gross;
+								$fee = ($payment_fee) ? $payment_fee : $mc_fee;
+								$net = $gross-$fee;
+								
 								$ins = array(
 									"txn_id" => $txn_id,
 									"txn_type" => $txn_type,
 									"status" => $payment_status,							
 									"time" => $payment_date,
-									"gross" => ($payment_gross <=0 ) ? $mc_gross : $payment_gross,
-									"fee" => $payment_fee,
-									"net" => $mc_gross,
+									"gross" => $gross,
+									"fee" => $fee,
+									"net" => $net,
 									"verified" =>'1',
 									"item_num" => $item_number,
 									"item_name" => $item_name,
@@ -222,27 +226,57 @@ fclose ($fp);
 								
 								// Make the insert.
 								
-								$this->db->insert("ipn_paypal",$ins);
+								$ipn_id = $this->db->insert("ipn_paypal",$ins,true);
 								
+								// =========== 
+			 					// ! Get an instance of FURY   
+			 					// =========== 
+			 					
+			 					$FURY =& get_instance();								
+								
+								$FURY->load->model('hand');
+								
+								$playerid = $FURY->hand->fetchId($user_email);
+								
+			 					// =========== 
+			 					// ! Payment has been recorded, shouldn't we now move this to a payments table for general recording?   
+			 					// =========== 
+			 					
+			 					$sale_fields = array(
+			 						"ipn_id" => $ipn_id,
+			 						"trans_id" => $txn_id,
+			 						"via" => 'Paypal',
+			 						"email" => $user_email,
+			 						"playerid" => $playerid,
+			 						"amount" => $net,
+			 						"fee_amount" => $fee,
+			 						"item_num" => $item_number,
+			 						"item_name" => $item_name,
+			 						"time" => time()
+			 					);
+			 							 					
+			 					// Record sale
+			 					$FURY->load->model('recordsale');
+			 					$FURY->recordsale->record($sale_fields);
+
 				
 								// =========== 
 								// ! Handle goods, ingame message and invoice email   
 								// =========== 
-								$FURY =& get_instance();
 								
 								// Hand the user the goods and email / invoice.
 								
 								$FURY->load->model('hand');
-								$FURY->hand->in_it('Paypal',$user_email,$item_number,$item_name,$txn_id,$amount_paid,$quantity);
+								$FURY->hand->in_it('Paypal',$user_email,$item_number,$item_name,$txn_id,$amount_paid,$item_quants);
 								
-								$FURY->hand->fetchAction($item_number);
+								$action = $FURY->hand->fetchAction($item_number);
 								
 								// Fetch some details before making the call 
 								//$playerid = $FURY->hand->fetchPlayer($payer_email);
 								//$reference = $FURY->hand->fetchReference($item_number,$option_name2);
 
 								// hand the player the goods
-								$FURY->hand->handGoods('Credits');
+								$FURY->hand->handGoods($action);
 								
 								// =========== 
 								// ! End handling of goods, start clearbooks integration   

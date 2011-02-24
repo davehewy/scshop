@@ -22,9 +22,11 @@ input,textarea,select{*font-size:100%;}
 legend{color:#000;}
 em{font-style: italic;}
 
+body{font-size:12px;}
+
 a{color:#3390FF;}
 a:visited{color:#3390FF;}
-h2{font-size:16px;font-weight:bold;margin:0px 0px 5px 0px;}
+h2{font-size:16px;font-weight:bold;margin:10px 0px;}
 h3{font-size:14px;font-weight:bold;margin:10px 0px;}
 .padtop10{padding-top:10px;}
 strong{font-weight:bold;font-size:14px;}
@@ -39,7 +41,16 @@ table{
 	border-spacing: 0px 5px;
 }
 
-table th{
-	font-size:13px;font-weight:bold;
-	border-bottom:1px dashed black;
+table.invoice th{
+	font-size:14px;font-weight:bold;
+	border-bottom:1px solid black;
+}
+
+table.invoice td{
+	border-bottom: 1px dashed black;
+	padding: 3px 0px;
+}
+
+table td.nobottom{
+	border-bottom: 0px solid black;
 }

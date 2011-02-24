@@ -30,6 +30,12 @@
 	
 	
 	// =========== 
+	// ! Physical site url, found at the remote server   
+	// =========== 
+	
+	$config['site_url'] = "http://shop.street-crime.com";
+	
+	// =========== 
 	// ! Base site URL
 	// ! Typically this would be your base URL with a trailing slash
 	// ! example http://website.com/ 	   
@@ -130,14 +136,14 @@
 	
 	// Available core apps are postmark, postmark_zend (postmark but using zend for delivering help)
 	
-	$config['email_app'] = "postmark_zend";
+	$config['email_app'] = "Postmark_Zend";
 	
 	// =========== 
 	// ! If you are using Zend in any part of this application please define your include path   
 	// =========== 
 	
-	$config['zend_local_include'] = "/usr/lib/php/libraries/zend-framework-1.11.2/";
-	$config['remote_include'] = $_SERVER['DOCUMENT_ROOT'];
+	$config['zend_local_path'] = "/usr/lib/php/libraries/zend-framework-1.11.2/";
+	$config['zend_remote_path'] = "/sites/bytewire-streetcrime/library/vendor/zendframework-1.11.2/";
 	
 	// =========== 
 	// ! Configure API Keys. Require by the likes of Postmark or what not.

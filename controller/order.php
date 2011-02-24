@@ -5,6 +5,7 @@
 	var $payment_fields = array();
 	var $errors = 0;
 	var $error_msgs = array();
+	var $disabled = array(6,7,8);
 	
 		function __construct(){
 			parent::__construct();
@@ -33,6 +34,8 @@
 				if($p){
 										
 					if($this->input->post('account') && $this->input->post('selectamount') && $this->input->post('type')){
+
+					if(!in_array($this->input->post('type'),$this->disabled)){
 					
 						if($this->validation->valid_email($this->input->post('account'))){
 						
@@ -69,7 +72,10 @@
 											$cost = 47.50;
 											break;
 								}
-									
+								
+								// If the item is credits make sure the name of the item being bought prepends the word credits.
+								
+																	
 																																	
 								$this->payment_fields = array(
 									"email"=>$this->input->post('account'),
@@ -79,7 +85,7 @@
 									"product"=>$p->itemnum,
 									"amount"=>$amount,
 									"cost"=>$cost,
-									"prodname"=>$p->name,
+									"prodname"=>($amount*10).' '.$p->name,
 									"cat"=>$p->category,
 									"playerid"=>$user_info['id']
 								);
@@ -104,11 +110,15 @@
 						}else{
 							$this->validation->addError("Email was not valid");
 						}	
+						
+					}else{
+						$this->validation->addError("This payment method is currently disabled!");
+					}
 									
 					}else{
 						$this->validation->addError("Not all fields selected");
 					}
-					
+										
 					}else{
 						$this->validation->addError("No product returned");
 					}
