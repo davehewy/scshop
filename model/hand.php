@@ -249,7 +249,13 @@ Street Crime Staff<br>
 			// Add a check in to make sure that the quantity is no more than the most they can add.
 			
 			if($this->quantity>0 && $this->quantity<=500){
-				$this->update_player($this->player_email,"credits=credits+'{$this->quantity}'");
+				$creditRow = $this->db->query("SELECT price FROM creditshoppricing 
+					WHERE amount='{$this->quantity}'")->row();
+				if($creditRow){
+					if($this->amt_paid >= $creditRow['price']){
+						$this->update_player($this->player_email,"credits=credits+'{$this->quantity}'");
+					}
+				}
 			}
 		}
 		
