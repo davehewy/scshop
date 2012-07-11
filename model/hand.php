@@ -246,8 +246,11 @@ Street Crime Staff<br>
 		
 		function addCredits(){
 			
-			$this->update_player($this->player_email,"credits=credits+'{$this->quantity}'");
+			// Add a check in to make sure that the quantity is no more than the most they can add.
 			
+			if($this->quantity>0 && $this->quantity<=500){
+				$this->update_player($this->player_email,"credits=credits+'{$this->quantity}'");
+			}
 		}
 		
 		// # Merchandise
